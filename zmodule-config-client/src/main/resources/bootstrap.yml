@@ -1,0 +1,22 @@
+spring:
+ cloud:
+  config:
+    name: zmodule-config-client # 定义要读取的资源文件的名称
+    profile: dev # 定义profile的 名称
+    label: master # 定义配置文件所在的分支
+    username: admin # 连接的用户名
+    password: enjoy # 连接的密码
+    
+#   uri: http://localhost:7101  # SpringCloudConfig的服务地址   --> zmodule-config
+#        之前创建的ConfigClient 只是单独的连接某一个配置中心uri
+#        现在我们已经在Eureka中心组成配置中心的集群高可用，那就不再通过uri的形式连接了，上面的uri方式注释掉，应该通过自动去Eureka中心发现具体配置中心，这样更好应用配置中心的高可用
+    discovery:
+      enabled: true   # 通过配置中心加载配置文件
+      service-id: zmodule-config-center   # 在eureka之中注册的服务ID
+
+# 当前的 Eureka client 连接的哪一个Eureka中心
+eureka: 
+ client: 
+  service-url:
+    defaultZone: http://admin:enjoy@localhost:7301/eureka
+    

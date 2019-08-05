@@ -1,0 +1,3 @@
+spring:
+ application:
+   name: zmodule-config-product-client  #注册中心显示的应用服务名称

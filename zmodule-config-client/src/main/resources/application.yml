@@ -1,0 +1,3 @@
+spring:
+ application:
+  name: zmodule-config-client # 编写应用的名称

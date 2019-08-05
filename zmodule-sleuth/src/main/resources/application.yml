@@ -1,0 +1,32 @@
+server:
+  port: 8601
+spring:
+  application:
+    name: zmodule-zipkin-server
+
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false   # 注意设置false
+
+
+zipkin:
+  collector:
+    sample-rate: 1.0
+    http:
+      enabled: false
+    rabbitmq:
+      addresses: localhost:5672
+      username: winmq
+      password: 123054
+      queue: zipkin
+      virtual-host: /
+  storage:
+    type: mysql
+    mysql:
+      host: localhost
+      port: 3306
+      username: root
+      password: 123054
+      db: zipkin

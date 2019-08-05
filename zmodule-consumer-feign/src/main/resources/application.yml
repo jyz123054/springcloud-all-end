@@ -1,0 +1,35 @@
+server:
+  port: 80
+
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: # 可以被压缩的类型
+        - text/xml
+        - application/xml
+        - application/json
+      min-request-size: 2048 # 超过2048的字节进行压缩，如果不设置默认是不开启。
+spring:
+  application:
+    name: consumer-feign-sleuth
+  zipkin: # Spring Cloud 链路跟踪相关配置
+    base-url: http://localhost:8601   # zmodule-sleuth设置的8601端口
+    sender:
+      type: rabbit   #提交的类型是RABBIT/KAFKA/WEB服务
+  sleuth:
+    sampler:
+      probability: 1.0  #抽样率，默认是0.1，这里为了方便查看设置为1.0  
+  
+
+logging:  # 记录日志
+  level:
+    org.module.service: DEBUG
+
+eureka:
+  client:
+    register-with-eureka: false
+    service-url:
+        defaultZone: http://admin:enjoy@eureka1:7001/eureka,http://admin:enjoy@eureka2:7002/eureka,http://admin:enjoy@eureka3:7003/eureka

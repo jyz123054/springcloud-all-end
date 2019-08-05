@@ -1,0 +1,31 @@
+server:
+  port: 7201
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/jyz123054/configcenter.git
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: localhost   #localhost  192.168.142.128
+    port: 5672    # RabbitMQ的监听端口
+    username: winmq  # 用户名       windows 5672: winmq 123054     linux 5673: jyzmq 123054
+    password: 123054 # 密码
+  application:
+    name: zmodule-config-bus
+
+eureka:
+ client:
+  serviceUrl:
+    defaultZone: http://admin:enjoy@localhost:7301/eureka # 注册到配置中心的Eureka注册中心
+ instance:
+    prefer-ip-address: true # 在地址栏上使用IP地址进行显示
+    instance-id: jyz-config-bus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

@@ -1,0 +1,57 @@
+server:
+  port: 9501
+
+eureka:
+  client: # 客户端进行Eureka注册的配置
+    service-url:
+      defaultZone: http://admin:enjoy@eureka1:7001/eureka,http://admin:enjoy@eureka2:7002/eureka,http://admin:enjoy@eureka3:7003/eureka
+      register-with-eureka: true
+  instance:
+    instance-id: jyz-zuul-gateway
+    prefer-ip-address: true
+#    lease-renewal-interval-in-seconds: 2 # 设置心跳的时间间隔（默认是30秒）
+#    lease-expiration-duration-in-seconds: 5 # 如果现在超过了5秒的间隔（默认是90秒）
+
+spring:
+  application:
+    name: zmodule-zuul-gateway   #作为Eureka服务的名称
+  security: # 安全认证相关
+    user:
+      name: admin
+      password: enjoy
+  zipkin: # Spring Cloud 链路跟踪相关配置
+    base-url: http://localhost:8601   # zmodule-sleuth设置的8601端口
+    sender:
+      type: rabbit   #提交的类型是RABBIT/KAFKA/WEB服务
+  sleuth:
+    sampler:
+      probability: 1.0  #抽样率，默认是0.1，这里为了方便查看设置为1.0  
+      
+# 第一种方式    
+#zuul:
+#  routes:
+#    zmodule-provider-users: /zuul-proxy/**
+#  ignored-services:
+#    "*"
+##   zmodule-provider-users  单独某个服务路由忽略
+
+# 第二种方式    
+zuul:
+  routes:
+    users:
+      path: /zuul-proxy-user/**
+      service-id: zmodule-provider-users
+    users2:
+      path: /zuul2-proxy-user/**
+      url: http://localhost:8090/  #这种方式类似 跳开了Eureka，直接使用url的方式访问。本地url这种方式，不会进行熔断处理
+    product:  #如果是调用的其他服务，并且也存在认证授权限制时，需要zuul进行过滤访问
+      path: /zuul-proxy-product/**
+      service-id: zmodule-provider
+  ignored-services:
+    "*"
+  prefix: /jyz  # 前缀
+  
+  
+  
+  
+  

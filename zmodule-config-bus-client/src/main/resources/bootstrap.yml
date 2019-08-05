@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    config:
+      name: zmodule-config-client # 定义要读取的资源文件的名称
+      profile: dev # 定义profile的 名称
+      label: master # 定义配置文件所在的分支
+      #uri: http://localhost:7101 # SpringCloudConfig的服务地址
+      username: admin # 连接的用户名
+      password: enjoy # 连接的密码
+      discovery:
+        enabled: true
+        service-id: zmodule-config-bus  #连接的Eureka中心哪一个应用名称
+
+  rabbitmq:
+    host: localhost   #localhost  192.168.142.128
+    port: 5672    # RabbitMQ的监听端口
+    username: winmq  # 用户名  windows : winmq 123054  linux:jyzmq 123054
+    password: 123054 # 密码
+
+eureka:
+ client:
+  serviceUrl:
+    defaultZone: http://admin:enjoy@localhost:7301/eureka
+  register-with-eureka: false
